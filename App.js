@@ -24,6 +24,16 @@ var uuid = Crypto.randomUUID();//this uses the Crypto library to generate a Univ
         Alert.alert("Saved with UUID: " + uuid);
 }
 
+    async function getData() {
+        try {
+            let thisBooking = await AsyncStorage.getItem(uuid);
+            let parsedBooking = JSON.parse(thisBooking); // ✅ Convert from string to object
+            Alert.alert("Movie Title: " + parsedBooking.movieTitle);
+        } catch (error) {
+          Alert.alert("Error getting data: " + error.message);
+        }
+      }
+
   
   return (
     <View style={styles.screencontainer}>
@@ -33,7 +43,7 @@ var uuid = Crypto.randomUUID();//this uses the Crypto library to generate a Univ
           <MovieBooking screenstyle={styles.screen} data={booking} setData={setBooking}/>
       </Swiper>
       <TouchableOpacity style={styles.button} onPress={saveData}><Text style={{fontSize: 24, fontWeight: "bold"}}>Save Data</Text></TouchableOpacity>
-      
+      <TouchableOpacity style={styles.button} onPress={getData}><Text style={{fontSize: 24, fontWeight: "bold"}}>Get Data</Text></TouchableOpacity>
     </View>
   )
 }
